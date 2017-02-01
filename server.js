@@ -33,8 +33,8 @@ app.get('/toppings', function(req, res) {
 });
 
 app.post('/toppings', function(req, res) {
-    if (req.body.name) {
-      Topping.findOne({ 'name' :  req.body.name }, function(err, topping) {
+    if (req.body.topping && req.body.topping.name) {
+      Topping.findOne({ 'name' :  req.body.topping.name }, function(err, topping) {
           // if there are any errors, return the error
           if (err) {
               res.json({'error': true, 'msg': err});
@@ -45,7 +45,7 @@ app.post('/toppings', function(req, res) {
               res.json({'error': true, 'msg': 'Topping already exists.'});
           } else {
             var top = new Topping();
-            top["name"] = req.body.name
+            top["name"] = req.body.topping.name
             top.save(function(err) {
                 if (err)
                     res.json({'error': true, 'msg': err});
@@ -71,8 +71,8 @@ app.get('/pizzas', function(req, res) {
 });
 
 app.post('/pizzas', function(req, res) {
-  if (req.body.name) {
-    Pizza.findOne({ 'name' :  req.body.name }, function(err, pizza) {
+  if (req.body.pizza.name && req.body.pizza.name) {
+    Pizza.findOne({ 'name' :  req.body.pizza.name }, function(err, pizza) {
         // if there are any errors, return the error
         if (err) {
             res.json({'error': true, 'msg': err});
@@ -83,9 +83,9 @@ app.post('/pizzas', function(req, res) {
             res.json({'error': true, 'msg': 'Pizza already exists.'});
         } else {
           var piz = new Pizza();
-          piz["name"] = req.body.name;
-          if (req.body.description) {
-            piz["description"] = req.body.description;
+          piz["name"] = req.body.pizza.name;
+          if (req.body.pizza.description) {
+            piz["description"] = req.body.pizza.description;
           }
           piz.save(function(err) {
               if (err)
